@@ -1341,6 +1341,8 @@ void step_once (SIM_CPU *cpu)
 		  NULL, 0, " "); /* Use a space for gcc warnings.  */
 
   iw = sim_core_read_aligned_2 (cpu, pc, exec_map, pc);
+  if (CURRENT_TARGET_BYTE_ORDER == BFD_ENDIAN_BIG)
+    iw = swap_2 (iw);
 
   len = riscv_insn_length (iw);
   if (len != 4 && len != 2)
@@ -1351,8 +1353,12 @@ void step_once (SIM_CPU *cpu)
     }
 
   if (len == 4)
-    iw |= ((unsigned_word) sim_core_read_aligned_2
-	   (cpu, pc, exec_map, pc + 2) << 16);
+    {
+      unsigned_word val = sim_core_read_aligned_2 (cpu, pc, exec_map, pc + 2);
+      if (CURRENT_TARGET_BYTE_ORDER == BFD_ENDIAN_BIG)
+	val = swap_2 (val);
+      iw |= (val << 16);
+    }
 
   TRACE_CORE (cpu, "0x%08" PRIxTW, iw);
 
