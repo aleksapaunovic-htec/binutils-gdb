@@ -73,7 +73,7 @@ sim_open (SIM_OPEN_KIND kind, host_callback *callback,
   /* Set default options before parsing user options.  */
   STATE_MACHS (sd) = riscv_sim_machs;
   STATE_MODEL_NAME (sd) = WITH_TARGET_WORD_BITSIZE == 32 ? "RV32G" : "RV64G";
-  current_target_byte_order = BFD_ENDIAN_LITTLE;
+  current_target_byte_order = WITH_TARGET_BYTE_ORDER;
   callback->syscall_map = cb_riscv_syscall_map;
 
   /* The cpu data is kept in a separately allocated chunk of memory.  */
