@@ -1,11 +1,17 @@
 # Basic Tests for C extension.
-# mach: riscv32 riscv64
-# sim(riscv32): --model RV32IC
-# sim(riscv64): --model RV64IC
+# mach: riscv32 riscv64 riscv32be riscv64be
+# sim(riscv32): --model RV32IC -EL
+# sim(riscv64): --model RV64IC -EL
+# sim(riscv32be): --model RV32IC -EB
+# sim(riscv64be): --model RV64IC -EB
 # ld(riscv32): -m elf32lriscv
 # ld(riscv64): -m elf64lriscv
-# as(riscv32): -march=rv32ic
-# as(riscv64): -march=rv64ic
+# ld(riscv32be): -m elf32briscv
+# ld(riscv64be): -m elf64briscv
+# as(riscv32): -march=rv32ic -mlittle-endian
+# as(riscv64): -march=rv64ic -mlittle-endian
+# as(riscv32be): -march=rv32ic -mbig-endian
+# as(riscv64be): -march=rv64ic -mbig-endian
 
 .include "testutils.inc"
 
